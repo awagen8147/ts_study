@@ -1,6 +1,7 @@
 export default function study() : void {
-	type_procedure()
+//	type_procedure()
 //	type_function()
+	type_strategy()
 }
 
 // 手続型
@@ -31,5 +32,33 @@ const type_function = () => {
 }
 
 // ストラテジパターン
-// コンポジットパターン
+abstract class JudgeDividable {
+	abstract judge(n: number): boolean
+}
+class JudgeDividableThree extends JudgeDividable {
+	judge(n: number): boolean {
+		return (n % 3 === 0? true : false)
+	}
+}
+class JudgeDividableFive extends JudgeDividable {
+	judge(n: number): boolean {
+		return (n % 5 === 0? true : false)
+	}
+}
 
+const type_strategy = () => {
+	const judgeThree: JudgeDividable = new JudgeDividableThree()
+	const judgeFive: JudgeDividable = new JudgeDividableFive()
+
+	const arrays = [...Array(101).keys()].map(i => ++i)
+	arrays.forEach(
+		elm => {
+			judgeThree.judge(elm) && !judgeFive.judge(elm)? console.log('F') :
+			judgeFive.judge(elm) && !judgeThree.judge(elm)? console.log('B') :
+			judgeThree.judge(elm) && judgeFive.judge(elm)? console.log('FB') :
+			console.log(elm)
+		}
+	)
+}
+
+// コンポジットパターン
